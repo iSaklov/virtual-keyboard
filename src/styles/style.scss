@@ -1,2 +1,40 @@
 @import "./normalize.css";
 @import "./variables.scss";
+
+.keyboard {
+	background-color: $primary-color;
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: 10px;
+	padding: 10px;
+	border-radius: 5px;
+
+	.key {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: $secondary-color;
+		border: none;
+		border-radius: 3px;
+		margin: 3px;
+		padding: 5px;
+		width: calc((100% / 14) - 6px);
+		height: 40px;
+		font-size: $font-size;
+		cursor: pointer;
+		user-select: none;
+		transition: all 0.2s ease-in-out;
+
+		&.active {
+			background-color: darken($secondary-color, 10%);
+		}
+
+		&:hover {
+			background-color: darken($secondary-color, 5%);
+		}
+
+		&:active {
+			transform: scale(0.95);
+		}
+	}
+}
