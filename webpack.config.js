@@ -16,10 +16,10 @@ module.exports = {
 		open: true,
 		hot: true,
 	},
-	entry: ['@babel/polyfill', path.resolve(__dirname, 'src', 'index.js')],
+	entry: ['@babel/polyfill', path.resolve(__dirname, 'src', 'main.js')],
 	output: {
 		filename: '[name].[contenthash].js',
-		path: path.resolve(__dirname, 'shelter/shelter'),
+		path: path.resolve(__dirname, 'dist'),
 		clean: true,
 		assetModuleFilename: 'assets/[name][ext]'
 	},
@@ -28,12 +28,8 @@ module.exports = {
   },
 	plugins: [
 		new HtmlWebpackPlugin({
-			filename: 'index.html',
+			filename: '[name].[contenthash].html',
 			template: path.resolve(__dirname, 'src', 'index.html')
-		}),
-		new HtmlWebpackPlugin({
-			filename: 'pets.html',
-			template: path.resolve(__dirname, 'src', 'pets.html')
 		}),
 		new MiniCssExtractPlugin({
 			filename: '[name].[contenthash].css'
