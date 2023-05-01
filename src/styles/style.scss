@@ -1,40 +1,53 @@
-@import "./normalize.css";
+@import "./normalize.scss";
 @import "./variables.scss";
 
+// Стили для корневого элемента
 .keyboard {
-	background-color: $primary-color;
+	background-color: $secondary-color;
+	border-radius: 0.5rem;
+	width: $keyboard-width;
+	margin: 2rem auto;
+	padding: 1rem;
 	display: flex;
 	flex-wrap: wrap;
-	margin-top: 10px;
-	padding: 10px;
-	border-radius: 5px;
+}
 
-	.key {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background-color: $secondary-color;
-		border: none;
-		border-radius: 3px;
-		margin: 3px;
-		padding: 5px;
-		width: calc((100% / 14) - 6px);
-		height: 40px;
-		font-size: $font-size;
-		cursor: pointer;
-		user-select: none;
-		transition: all 0.2s ease-in-out;
+// Стили для строки клавиатуры
+.keyboard-row {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 1rem;
 
-		&.active {
-			background-color: darken($secondary-color, 10%);
-		}
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
 
-		&:hover {
-			background-color: darken($secondary-color, 5%);
-		}
+// Стили для кнопок клавиатуры
+.key {
+	background-color: $primary-color;
+	color: $font-color;
+	font-size: $font-size;
+	padding: 0.5rem 1rem;
+	border-radius: 0.5rem;
+	text-align: center;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
 
-		&:active {
-			transform: scale(0.95);
-		}
+	&:hover {
+		background-color: darken($primary-color, 10%);
+	}
+
+	&.active {
+		background-color: darken($primary-color, 20%);
+	}
+
+	&.spacer {
+		flex-grow: 1;
+		visibility: hidden;
+	}
+
+	&.wide {
+		flex-basis: 75%;
 	}
 }

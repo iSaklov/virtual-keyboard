@@ -4,7 +4,11 @@
   "description": "RSS Virtual Keyboard by iSaklov",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "webpack serve",
+    "build-dev": "webpack",
+    "build-prod": "webpack --node-env=production",
+    "clear": "rm -R dist",
+    "deploy-git": "gh-pages -d shelter"
   },
   "repository": {
     "type": "git",
@@ -18,15 +22,19 @@
   "homepage": "https://github.com/iSaklov/virtual-keyboard#readme",
   "devDependencies": {
     "@babel/core": "^7.21.5",
+    "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.21.5",
     "babel-loader": "^9.1.2",
     "css-loader": "^6.7.3",
     "gh-pages": "^5.0.0",
     "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.5.1",
+    "install": "^0.13.0",
     "mini-css-extract-plugin": "^2.7.5",
+    "npm": "^9.6.5",
     "postcss": "^8.4.23",
     "postcss-loader": "^7.3.0",
+    "postcss-preset-env": "^8.3.2",
     "sass": "^1.62.1",
     "sass-loader": "^13.2.2",
     "style-loader": "^3.3.2",
