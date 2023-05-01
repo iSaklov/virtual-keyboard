@@ -307,11 +307,23 @@ template {
   display: none;
 }
 
-.keyboard {
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.textarea {
+  width: 75%;
+  height: 10rem;
+  margin-top: 2rem;
+}
+
+.keyboard-container {
   background-color: #6c757d;
+  width: 75%;
   border-radius: 0.5rem;
-  width: 30rem;
-  margin: 2rem auto;
   padding: 1rem;
   display: flex;
   flex-wrap: wrap;
@@ -326,7 +338,7 @@ template {
   margin-bottom: 0;
 }
 
-.key {
+.keyboard-key {
   background-color: #007bff;
   color: #fff;
   font-size: 1.5rem;
@@ -336,16 +348,16 @@ template {
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
-.key:hover {
+.keyboard-key:hover {
   background-color: #0062cc;
 }
-.key.active {
+.keyboard-key.active {
   background-color: #004a99;
 }
-.key.spacer {
+.keyboard-key.spacer {
   flex-grow: 1;
   visibility: hidden;
 }
-.key.wide {
+.keyboard-key.wide {
   flex-basis: 75%;
 }

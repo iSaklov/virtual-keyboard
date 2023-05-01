@@ -1,16 +1,47 @@
-const keyboardLayouts = {
-	en: [
-		['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'delete'],
-		['tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\'],
-		['caps', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', 'return'],
-		['shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', 'shift'],
-		['control', 'option', 'command', ' ', 'command', 'option', 'left', 'down', 'right']
-	],
-	ru: [
-		['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'delete'],
-		['tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\'],
-		['caps', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'return'],
-		['shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', 'shift'],
-		['control', 'option', 'command', ' ', 'command', 'option', 'left', 'down', 'right']
-	]
-};
+// const keyboardLayouts = {
+// en: [
+//     [
+//       { code: 'Backquote', key: '`', action: 'letter' },
+//       { code: 'Digit1', key: '1', action: 'letter' },
+//       { code: 'Digit2', key: '2', action: 'letter' },
+//       { code: 'Digit3', key: '3', action: 'letter' },
+//       { code: 'Digit4', key: '4', action: 'letter' },
+//       { code: 'Digit5', key: '5', action: 'letter' },
+//       { code: 'Digit6', key: '6', action: 'letter' },
+//       { code: 'Digit7', key: '7', action: 'letter' },
+//       { code: 'Digit8', key: '8', action: 'letter' },
+//       { code: 'Digit9', key: '9', action: 'letter' },
+//       { code: 'Digit0', key: '0', action: 'letter' },
+//       { code: 'Minus', key: '-', action: 'letter' },
+//       { code: 'Equal', key: '=', action: 'letter' },
+//       { code: 'Backspace', key: '⌫', action: 'backspace' },
+//     ],
+//     [
+//       { code: 'Tab', key: '⇥', action: 'tab' },
+//       { code: 'KeyQ', key: 'q', action: 'letter' },
+//       { code: 'KeyW', key: 'w', action: 'letter' },
+//       { code: 'KeyE', key: 'e', action: 'letter' },
+//       { code: 'KeyR', key: 'r', action: 'letter' },
+//       { code: 'KeyT', key: 't', action: 'letter' },
+//       { code: 'KeyY', key: 'y', action: 'letter' },
+//       { code: 'KeyU', key: 'u', action: 'letter' },
+//       { code: 'KeyI', key: 'i', action: 'letter' },
+//       { code: 'KeyO', key: 'o', action: 'letter' },
+//       { code: 'KeyP', key: 'p', action: 'letter' },
+//       { code: 'BracketLeft', key: '[', action: 'letter' },
+//       { code: 'BracketRight', key: ']', action: 'letter' },
+//       { code: 'Backslash', key: '\\', action: 'letter' },
+//     ],
+//     [
+//       { code: 'CapsLock', key: '⇪', action: 'capslock' },
+//       { code: 'KeyA', key: 'a', action: 'letter' },
+//       { code: 'KeyS', key: 's', action: 'letter' },
+//       { code: 'KeyD', key: 'd', action: 'letter' },
+//       { code: 'KeyF', key: 'f', action: 'letter' },
+//       { code: 'KeyG', key: 'g', action: 'letter' },
+//       { code: 'KeyH', key: 'h', action: 'letter' },
+//       { code: 'KeyJ', key: 'j', action: 'letter' },
+//       { code: 'KeyK', key: 'k', action: 'letter' },
+//       { code: 'KeyL', key: 'l', action: 'letter' },
+//       { code: 'Semicolon', key
+// };

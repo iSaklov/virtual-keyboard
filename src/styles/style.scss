@@ -1,12 +1,24 @@
 @import "./normalize.scss";
 @import "./variables.scss";
 
+body {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.textarea {
+	width: 75%;
+	height: 10rem;
+	margin-top: 2rem;
+}
+
 // Стили для корневого элемента
-.keyboard {
+.keyboard-container {
 	background-color: $secondary-color;
+	width: 75%;
 	border-radius: 0.5rem;
-	width: $keyboard-width;
-	margin: 2rem auto;
 	padding: 1rem;
 	display: flex;
 	flex-wrap: wrap;
@@ -24,7 +36,7 @@
 }
 
 // Стили для кнопок клавиатуры
-.key {
+.keyboard-key {
 	background-color: $primary-color;
 	color: $font-color;
 	font-size: $font-size;

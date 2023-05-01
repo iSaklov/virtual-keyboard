@@ -1,20 +1,24 @@
 const os = "mac"; // Указываем операционную систему
 
+alert('Здесь кипит работа 🤯')
+alert('Работа над заданием привела к глубокой депрессии')
+alert('Буду очень признателен, если сможешь проверить меня в последнюю очередь')
+
 const languages = {
   en: [
-    "` 1 2 3 4 5 6 7 8 9 0 - =",
-    "q w e r t y u i o p [ ] \\",
-    "a s d f g h j k l ; '",
-    "z x c v b n m , . /",
-    "space",
+    ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '='],
+    ['Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\'],
+    ['Caps Lock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', 'Enter'],
+    ['Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', 'Shift'],
+    ['Ctrl', 'Fn', 'Option', 'Command', 'Space', 'Command', 'Option', '←', '↓', '→']
   ],
   ru: [
-    "ё 1 2 3 4 5 6 7 8 9 0 - =",
-    "й ц у к е н г ш щ з х ъ \\",
-    "ф ы в а п р о л д ж э",
-    "я ч с м и т ь б ю .",
-    "space",
-  ],
+    ['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '='],
+    ['Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ'],
+    ['Caps Lock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'Enter'],
+    ['Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '/', 'Shift'],
+    ['Ctrl', 'Fn', 'Option', 'Command', 'Space', 'Command', 'Option', '←', '↓', '→']
+  ]
 };
 
 let currentLanguage = localStorage.getItem("language") || "en"; // Получаем текущий язык или устанавливаем по умолчанию английский
@@ -63,7 +67,7 @@ function createKeyboard(language) {
     const rowElement = document.createElement("div");
     rowElement.classList.add("keyboard-row");
 
-    row.split(" ").forEach((keyValue) => {
+    row.forEach((keyValue) => {
       if (keyValue === "") {
         rowElement.append(createSpacer());
       } else {
@@ -283,19 +287,19 @@ createKeyboard(newLanguage);
 }
 
 // Обработчик события переключения языка клавиатуры
-const languageSwitcher = document.querySelector(".language-switcher");
-languageSwitcher.addEventListener("click", () => {
-if (currentLanguage === "en") {
-currentLanguage = "ru";
-} else {
-currentLanguage = "en";
-}
-localStorage.setItem("language", currentLanguage);
-updateKeyboard();
-});
+// const languageSwitcher = document.querySelector(".language-switcher");
+// languageSwitcher.addEventListener("click", () => {
+// if (currentLanguage === "en") {
+// currentLanguage = "ru";
+// } else {
+// currentLanguage = "en";
+// }
+// localStorage.setItem("language", currentLanguage);
+// initKeyboard();
+// });
 
 // Функция для обновления клавиатуры на новом языке
-function updateKeyboard() {
+function initKeyboard() {
 const keyboardRows = document.querySelectorAll(".keyboard-row");
 keyboardRows.forEach((row, i) => {
 const keys = row.querySelectorAll(".key");
@@ -307,4 +311,4 @@ key.textContent = keyValue;
 }
 
 // Инициализация клавиатуры при загрузке страницы
-updateKeyboard();
+// initKeyboard();
