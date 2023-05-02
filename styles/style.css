@@ -318,9 +318,10 @@ body {
   width: 75%;
   height: 10rem;
   margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
-.keyboard-container {
+.keyboard {
   background-color: #6c757d;
   width: 75%;
   border-radius: 0.5rem;

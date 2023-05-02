@@ -1,8 +1,8 @@
 const os = "mac"; // Указываем операционную систему
 
-alert('Здесь кипит работа 🤯')
-alert('Работа над заданием привела к глубокой депрессии')
-alert('Буду очень признателен, если сможешь проверить меня в последнюю очередь')
+// alert('Здесь кипит работа 🤯')
+// alert('Работа над заданием привела к глубокой депрессии')
+// alert('Буду очень признателен, если сможешь проверить меня в последнюю очередь')
 
 const languages = {
   en: [
@@ -24,12 +24,24 @@ const languages = {
 let currentLanguage = localStorage.getItem("language") || "en"; // Получаем текущий язык или устанавливаем по умолчанию английский
 
 const keyboardContainer = document.createElement("div");
-keyboardContainer.classList.add("keyboard-container");
+keyboardContainer.classList.add("keyboard");
 
 const textarea = document.createElement("textarea");
 textarea.classList.add("textarea");
 
-document.body.append(keyboardContainer, textarea);
+const title = document.createElement("h1");
+title.innerText = currentLanguage === "en" ? "RSS Virtual Keyboard" : "RSS Виртуальная клавиатура";
+title.classList.add("title");
+
+const span1 = document.createElement("span");
+span1.innerText = currentLanguage === "en" ? "The keyboard was created in the operating system Mac OS" : "Клавиатура создана в операционной системе Mac OS";
+span1.classList.add("span");
+
+const span2 = document.createElement("span");
+span2.innerText = currentLanguage === "en" ? "To switch the language, the combination: left ctrl + space" : "Для переключения языка комбинация: левый ctrl + пробел";
+span2.classList.add("span");
+
+document.body.append(title, textarea, keyboardContainer, span1, span2);
 
 // Функция для добавления кнопки на клавиатуру
 function createButton(keyValue, buttonClass) {

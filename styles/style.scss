@@ -12,10 +12,11 @@ body {
 	width: 75%;
 	height: 10rem;
 	margin-top: 2rem;
+	margin-bottom: 2rem;
 }
 
 // Стили для корневого элемента
-.keyboard-container {
+.keyboard {
 	background-color: $secondary-color;
 	width: 75%;
 	border-radius: 0.5rem;
