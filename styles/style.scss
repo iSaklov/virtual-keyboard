@@ -68,3 +68,21 @@ body {
 .capslock.active {
 	background-color: rosybrown;
 }
+
+.keyboard-key[data-code='Enter'] {
+	// position: relative;
+	// background-color: aqua !important;
+	// z-index: 5;
+
+	// &:after {
+	// 	content: '';
+	// 	position: absolute;
+	// 	bottom: -1rem;
+	// 	left: 1rem;
+	// 	width: 2rem;
+	// 	height: 2rem;
+	// 	background-color: $primary-color;
+	// 	border-radius: 0 0 0 0.5rem;
+	// 	z-index: 0;
+	// }
+}
