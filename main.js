@@ -37,38 +37,6 @@ span2.classList.add('span')
 
 document.body.append(title, textarea, keyboard, span1, span2)
 
-// Функция для добавления кнопки на клавиатуру
-function createButton(keyValue, buttonClass) {
-	const button = document.createElement('button')
-	button.classList.add('keyboard-button', buttonClass)
-	button.textContent = keyValue
-
-	// Обработчик событий на клик по кнопке
-	button.addEventListener('click', () => {
-		if (keyValue === 'space') {
-			textarea.value += ' '
-		} else if (keyValue === 'tab') {
-			textarea.value += '  '
-		} else if (keyValue === 'enter') {
-			textarea.value += '\n'
-		} else if (keyValue === 'backspace') {
-			textarea.value = textarea.value.slice(0, -1)
-		} else if (keyValue === 'del') {
-			textarea.value =
-				textarea.value.slice(0, textarea.selectionStart) +
-				textarea.value.slice(textarea.selectionEnd)
-		} else if (keyValue === 'capslock') {
-			const capsLock = document.querySelector('.capslock')
-			capsLock.classList.toggle('active')
-			toggleCapsLock()
-		} else {
-			textarea.value += keyValue[currentLanguage === 'en' ? 0 : 1]
-		}
-	})
-
-	return button
-}
-
 // Функция для создания всей клавиатуры на основе языков
 function initKeyboard(language) {
 	const keys = keyboardLayouts[language].map((row) => {
@@ -101,8 +69,49 @@ initKeyboard(currentLanguage)
 // Обработчик нажатия на клавиатуре мышью
 keyboard.addEventListener('click', (event) => {
 	if (event.target.classList.contains('keyboard-key')) {
+		// console.log('event', event.target)
+
 		const key = event.target.textContent
-		insertText(key) //TODO
+
+		if (!event.target.classList.contains('action')) {
+			insertText(key)
+		}
+
+		// console.log('event.target.dataset.code', event.target.dataset.code)
+
+		switch (event.target.dataset.code) {
+			case 'Backspace':
+				deleteText(-1)
+				break
+			case 'Delete':
+				deleteText(1)
+				break
+			case 'Tab':
+				insertText('    ')
+				break
+			case 'Enter':
+				insertText('\n')
+				break
+			case 'CapsLock':
+				capslockButton.classList.toggle('active')
+				toggleCapsLock()
+				break
+			case 'Space':
+				insertText(' ')
+				break
+			case 'ArrowUp':
+				insertText('↑')
+				break
+			case 'ArrowDown':
+				insertText('↓')
+				break
+			case 'ArrowLeft':
+				insertText('←')
+				break
+			case 'ArrowRight':
+				insertText('→')
+				break
+		}
 	}
 })
 
@@ -125,6 +134,25 @@ document.addEventListener('keydown', (event) => {
 
 	// Навигация по текстовому полю
 	switch (key) {
+		case 'Backspace':
+			deleteText(-1)
+			break
+		case 'Delete':
+			deleteText(1)
+			break
+		case 'Tab':
+			insertText('    ')
+			break
+		case 'Enter':
+			insertText('\n')
+			break
+		case 'CapsLock':
+			capslockButton.classList.toggle(
+				'active',
+				event.getModifierState('CapsLock')
+			)
+			toggleCapsLock()
+			break
 		case 'ArrowUp':
 			insertText('↑')
 			break
@@ -137,34 +165,16 @@ document.addEventListener('keydown', (event) => {
 		case 'ArrowRight':
 			insertText('→')
 			break
-		case 'Enter':
-			insertText('\n')
-			break
-		case 'Tab':
-			insertText('    ')
-			break
-		case 'Backspace':
-			deleteText(-1)
-			break
-		case 'Delete':
-			deleteText(1)
-			break
-		case 'CapsLock':
-			capslockButton.classList.toggle(
-				'active',
-				event.getModifierState('CapsLock')
-			)
-			toggleCapsLock()
 	}
 })
 
 const capslockButton = document.querySelector('button[data-code="CapsLock"]')
 capslockButton.classList.add('capslock')
 
-capslockButton.addEventListener('click', () => {
-	capslockButton.classList.toggle('active')
-	toggleCapsLock()
-})
+// capslockButton.addEventListener('click', () => {
+// 	capslockButton.classList.toggle('active')
+// 	toggleCapsLock()
+// })
 
 // Обработчик отжатия клавиш на физической клавиатуре
 document.addEventListener('keyup', (event) => {
@@ -240,6 +250,7 @@ function deleteText(direction) {
 			textarea.value.slice(0, startPosition) + textarea.value.slice(endPosition)
 		textarea.selectionEnd = textarea.selectionStart = startPosition + direction
 	}
+	textarea.focus()
 }
 
 // Функция для переключения режима CapsLock
