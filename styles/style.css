@@ -349,6 +349,9 @@ body {
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
+.keyboard-key.action {
+  background-color: teal;
+}
 .keyboard-key:hover {
   background-color: #0062cc;
 }
@@ -359,6 +362,7 @@ body {
   flex-grow: 1;
   visibility: hidden;
 }
-.keyboard-key.wide {
-  flex-basis: 75%;
+
+.capslock.active {
+  background-color: rosybrown;
 }

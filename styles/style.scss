@@ -1,5 +1,5 @@
-@import "./normalize.scss";
-@import "./variables.scss";
+@import './normalize.scss';
+@import './variables.scss';
 
 body {
 	display: flex;
@@ -47,6 +47,10 @@ body {
 	cursor: pointer;
 	transition: all 0.2s ease-in-out;
 
+	&.action {
+		background-color: teal;
+	}
+
 	&:hover {
 		background-color: darken($primary-color, 10%);
 	}
@@ -59,8 +63,8 @@ body {
 		flex-grow: 1;
 		visibility: hidden;
 	}
+}
 
-	&.wide {
-		flex-basis: 75%;
-	}
+.capslock.active {
+	background-color: rosybrown;
 }
