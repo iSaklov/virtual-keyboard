@@ -45,15 +45,22 @@ function initKeyboard(language) {
 
 		row.forEach((item) => {
 			// const isLetter = /^[a-zA-Zа-яА-ЯёЁ]$/.test(keyValue)
+			// /^[^a-zA-Zа-яА-ЯёЁ]$/
 			const button = document.createElement('button')
 			button.classList.add('keyboard-key')
 
 			if (item.action) {
 				button.classList.add('action')
+				button.setAttribute('data-action', item.action)
 			}
 
 			button.setAttribute('data-code', item.code)
-			button.textContent = item.key
+			button.setAttribute('data-key', item.key)
+			button.setAttribute('data-shiftKey', item.shiftKey)
+			if (/^[^a-zA-Zа-яА-ЯёЁ]$/.test(item.key)) {
+				// button.textContent = item.shiftKey
+			}
+			// button.textContent += '\n' + item.key
 			rowElement.append(button)
 		})
 
@@ -69,17 +76,14 @@ initKeyboard(currentLanguage)
 // Обработчик нажатия на клавиатуре мышью
 keyboard.addEventListener('click', (event) => {
 	if (event.target.classList.contains('keyboard-key')) {
-		// console.log('event', event.target)
-
-		const key = event.target.textContent
-
 		if (!event.target.classList.contains('action')) {
-			insertText(key)
+			insertText(event.target.textContent)
 		}
 
 		// console.log('event.target.dataset.code', event.target.dataset.code)
+		// console.log('event.target.dataset.action', event.target.dataset.action)
 
-		switch (event.target.dataset.code) {
+		switch (event.target.dataset.action) {
 			case 'Backspace':
 				deleteText(-1)
 				break
@@ -94,8 +98,11 @@ keyboard.addEventListener('click', (event) => {
 				break
 			case 'CapsLock':
 				capslockButton.classList.toggle('active')
-				toggleCapsLock()
+				toggleCaseMode()
 				break
+			// case 'Shift':
+			// 	keyboard.classList.add('shift-pressed')
+			// 	toggleCaseMode()
 			case 'Space':
 				insertText(' ')
 				break
@@ -118,8 +125,8 @@ keyboard.addEventListener('click', (event) => {
 // Обработчик нажатия клавиш на физической клавиатуре
 document.addEventListener('keydown', (event) => {
 	const key = event.key
-	console.log('key', key)
-	console.log('event', event.code)
+	// console.log('key', key)
+	// console.log('event', event.code)
 
 	// Отменяем стандартное поведение кнопок
 	event.preventDefault()
@@ -151,7 +158,11 @@ document.addEventListener('keydown', (event) => {
 				'active',
 				event.getModifierState('CapsLock')
 			)
-			toggleCapsLock()
+			toggleCaseMode()
+			break
+		case 'Shift':
+			keyboard.classList.add('shift-pressed')
+			toggleCaseMode()
 			break
 		case 'ArrowUp':
 			insertText('↑')
@@ -171,19 +182,34 @@ document.addEventListener('keydown', (event) => {
 const capslockButton = document.querySelector('button[data-code="CapsLock"]')
 capslockButton.classList.add('capslock')
 
-// capslockButton.addEventListener('click', () => {
-// 	capslockButton.classList.toggle('active')
-// 	toggleCapsLock()
-// })
+const shiftButtons = document.querySelectorAll('button[data-action="Shift"]')
+
+shiftButtons.forEach((button) => {
+	button.addEventListener('mousedown', () => {
+		keyboard.classList.add('shift-pressed')
+		toggleCaseMode()
+	})
+})
+
+shiftButtons.forEach((button) => {
+	button.addEventListener('mouseup', () => {
+		keyboard.classList.remove('shift-pressed')
+		toggleCaseMode()
+	})
+})
 
 // Обработчик отжатия клавиш на физической клавиатуре
 document.addEventListener('keyup', (event) => {
-	if (event.code === 'CapsLock') {
+	if (event.key === 'CapsLock') {
 		capslockButton.classList.toggle(
 			'active',
 			event.getModifierState('CapsLock')
 		)
-		toggleCapsLock()
+		toggleCaseMode()
+	}
+	if (event.key === 'Shift') {
+		keyboard.classList.remove('shift-pressed')
+		toggleCaseMode()
 	}
 
 	// Снимаем подсветку с клавиши на виртуальной клавиатуре
@@ -253,16 +279,17 @@ function deleteText(direction) {
 	textarea.focus()
 }
 
-// Функция для переключения режима CapsLock
-function toggleCapsLock() {
-	const buttons = document.querySelectorAll('.keyboard-key')
+// Функция для переключения режима CapsLock и удержания клавиши Shift
+function toggleCaseMode() {
+	const buttons = document.querySelectorAll('button:not([data-action])')
 	buttons.forEach((button) => {
-		if (/^[a-zA-Zа-яА-ЯёЁ]$/.test(button.textContent)) {
-			if (capslockButton.classList.contains('active')) {
-				button.textContent = button.textContent.toUpperCase()
-			} else {
-				button.textContent = button.textContent.toLowerCase()
-			}
+		if (
+			capslockButton.classList.contains('active') ||
+			keyboard.classList.contains('shift-pressed')
+		) {
+			button.textContent = button.dataset.shiftkey
+		} else {
+			button.textContent = button.dataset.key
 		}
 	})
 }

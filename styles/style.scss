@@ -43,9 +43,30 @@ body {
 	font-size: $font-size;
 	padding: 0.5rem 1rem;
 	border-radius: 0.5rem;
-	text-align: center;
+	// text-align: center;
 	cursor: pointer;
 	transition: all 0.2s ease-in-out;
+
+	position: relative;
+	font-size: 16px;
+	width: 3rem;
+	height: 3rem;
+
+	&:before {
+		position: absolute;
+		content: attr(data-shiftkey);
+		font-size: 12px;
+		top: 0;
+		left: 0;
+	}
+
+	&:after {
+		// position: absolute;
+		content: attr(data-key);
+		font-size: 25px;
+		bottom: 0;
+		right: 0.25rem;
+	}
 
 	&.action {
 		background-color: teal;
@@ -62,6 +83,13 @@ body {
 	&.spacer {
 		flex-grow: 1;
 		visibility: hidden;
+	}
+
+	&::first-letter {
+		// font-size: 0.3rem;
+		// position: absolute;
+		// top: -1rem;
+		// left: 0;
 	}
 }
 
