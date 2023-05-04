@@ -1,5 +1,7 @@
-import keyboardLayouts from './keyboard-layout';
-import setLanguage from './language';
+import './index.html';
+import './styles/style.scss';
+import keyboardLayouts from './js/keyboard-layout';
+import setLanguage from './js/language';
 
 const keyboard = document.createElement('div');
 keyboard.classList.add('keyboard');
@@ -45,7 +47,8 @@ function insertText(text) {
     string.toUpperCase();
   }
 
-  textarea.value = currentValue.substring(0, cursorPosStart)
+  textarea
+    .value = currentValue.substring(0, cursorPosStart)
     + string + currentValue.substring(cursorPosEnd);
   textarea.setSelectionRange(cursorPosStart + string.length, cursorPosStart + string.length);
   textarea.focus();
@@ -209,21 +212,24 @@ document.addEventListener('keydown', (event) => {
   // Highlight the pressed key on the virtual keyboard
   highlightKey(event.code);
 
-  if (event.key.length === 1) {
+  const { key } = event;
+
+  if (key.length === 1) {
     const { code } = event;
+
     if (
       keyboard.classList.contains('capslock-pressed')
       || keyboard.classList.contains('shift-pressed')
     ) {
-      const { shiftKey } = keyboardLayouts[currentLanguage]
+      const char = keyboardLayouts[currentLanguage]
         .find((row) => row.some((keyObj) => keyObj.code === code))
         .find((keyObj) => keyObj.code === code).shiftKey;
-      insertText(shiftKey);
+      insertText(char);
     } else {
-      const { key } = keyboardLayouts[currentLanguage]
+      const char = keyboardLayouts[currentLanguage]
         .find((row) => row.some((keyObj) => keyObj.code === code))
         .find((keyObj) => keyObj.code === code).key;
-      insertText(key);
+      insertText(char);
     }
   }
 
@@ -266,9 +272,10 @@ document.addEventListener('keydown', (event) => {
     case 'ArrowLeft':
       insertText('←');
       break;
-    default:
-      // case 'ArrowRight':
+    case 'ArrowRight':
       insertText('→');
+      break;
+    default:
   }
 });
 
