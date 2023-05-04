@@ -310,82 +310,161 @@ template {
 body {
   display: flex;
   flex-direction: column;
+  row-gap: 20px;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  height: 100vh;
+  text-align: center;
+}
+
+h1 {
+  font-family: "Helvetica Neue", sans-serif;
+  font-size: 60px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #ff00ff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.5), 0 0 30px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 255, 255, 0.5), 0 0 50px rgba(255, 255, 255, 0.5);
+  transform: skew(-10deg);
+}
+
+span {
+  font-size: 1.5rem;
+  color: hotpink;
+  text-shadow: 1px 1px 0px blue, -1px -1px 0px yellow;
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+span:hover {
+  transform: scale(1.2);
 }
 
 .textarea {
-  width: 75%;
-  height: 10rem;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  padding: 8px;
+  height: 200px;
+  width: 850px;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0px 0px 20px 5px rgba(245, 23, 188, 0.8), 0px 0px 40px 10px rgba(16, 255, 241, 0.8), 0px 0px 60px 15px rgba(255, 196, 0, 0.8);
+  resize: none;
+}
+.textarea:focus {
+  outline: none;
 }
 
 .keyboard {
-  background-color: #6c757d;
-  width: 75%;
-  border-radius: 0.5rem;
-  padding: 1rem;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height: min-content;
+  width: min-content;
+  background-color: #111;
+  border-radius: 10px;
 }
-.keyboard.capslock-pressed .keyboard-key[data-action=CapsLock] {
-  background-color: rosybrown;
-}
-
 .keyboard-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  justify-content: center;
 }
-.keyboard-row:last-child {
-  margin-bottom: 0;
-}
-
 .keyboard-key {
-  background-color: #007bff;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  margin: 5px;
+  font-size: 18px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   color: #fff;
-  font-size: 1.5rem;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
+  background-color: #222;
+  border-radius: 5px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  position: relative;
-  width: 3rem;
-  height: 3rem;
+}
+.keyboard-key:before {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-size: 12px;
+  font-weight: bold;
+  opacity: 0.5;
+}
+.keyboard-key.active {
+  background-color: #00ffff;
+  color: #000;
+}
+.keyboard-key:hover {
+  transform: scale(1.05);
 }
 .keyboard-key[data-action] {
-  background-color: teal;
+  background-color: #ff00ff;
+  color: #fff;
 }
 .keyboard-key[data-action]::before {
   content: attr(data-key);
-}
-.keyboard-key.capslock-pressed[data-action=CapsLock] {
-  background-color: rosybrown;
-}
-.keyboard-key[data-shiftkey]:not([data-keytype=letter])::before {
-  position: absolute;
-  content: attr(data-shiftkey);
-  font-size: 14px;
+  font-size: 25px;
+  position: relative;
   top: 0;
   left: 0;
+}
+.keyboard-key[data-action][data-action].active {
+  background-color: #ffff00;
+  color: #ff00ff;
+}
+.keyboard-key[data-action=Tab] {
+  width: 60px;
+}
+.keyboard-key[data-action=Shift] {
+  width: 75px;
+}
+.keyboard-key[data-action=CapsLock] {
+  width: 100px;
+}
+.keyboard-key[data-action=Enter] {
+  width: 75px;
+}
+.keyboard-key[data-action=Backspace] {
+  width: 75px;
+}
+.keyboard-key[data-code=Space] {
+  width: 300px;
+}
+.keyboard-key[data-action=ArrowLeft], .keyboard-key[data-action=ArrowUp], .keyboard-key[data-action=ArrowRight], .keyboard-key[data-action=ArrowDown] {
+  height: 25px;
+}
+.keyboard-key[data-action=ArrowLeft] {
+  bottom: -25px;
+  right: -10px;
+  margin-left: 25px;
+}
+.keyboard-key[data-action=ArrowDown] {
+  bottom: -25px;
+  left: -60px;
+}
+.keyboard-key[data-action=ArrowRight] {
+  bottom: -25px;
+  left: -70px;
+}
+.keyboard-key[data-shiftkey]:not([data-keytype=letter])::before {
+  content: attr(data-shiftkey);
 }
 .keyboard-key[data-shiftkey]::after {
   position: absolute;
   content: attr(data-key);
   font-size: 25px;
-  bottom: 0;
-  right: 0.25rem;
+  bottom: 5px;
+  right: 10px;
 }
 .keyboard-key[data-shiftkey].uppercase::before {
   display: none;
 }
 .keyboard-key[data-shiftkey].uppercase::after {
   content: attr(data-shiftkey);
-}
-.keyboard-key:hover {
-  background-color: #0062cc;
-}
-.keyboard-key.active {
-  background-color: #004a99;
+  position: relative;
+  bottom: 0;
+  right: 0;
 }
