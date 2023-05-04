@@ -52,7 +52,6 @@ function createKeyboard(language) {
 
 createKeyboard(currentLanguage)
 
-const capslockButton = document.querySelector('button[data-code="CapsLock"]')
 const shiftButtons = document.querySelectorAll('button[data-action="Shift"]')
 
 // Mouse click handlers
@@ -143,11 +142,16 @@ document.addEventListener('keydown', (event) => {
 
 	switch (event.key) {
 		case 'Backspace':
-			deleteText(-1)
+			if (keyboard.classList.contains('ctrl-pressed')) {
+				console.log('ctrl + backspace')
+				deleteText(1)
+			} else {
+				deleteText(-1)
+			}
 			break
-		case 'Delete':
-			deleteText(1)
-			break
+		// case 'Delete':
+		// 	deleteText(1)
+		// 	break
 		case 'Tab':
 			insertText('    ')
 			break
@@ -255,18 +259,21 @@ function insertText(string) {
 function deleteText(direction) {
 	const startPosition = textarea.selectionStart
 	const endPosition = textarea.selectionEnd
-	// console.log(startPosition, endPosition)
 
-	if (startPosition === endPosition && startPosition > 0) {
+	if (direction === -1 && startPosition > 0) {
+		// backspace
 		textarea.value =
 			textarea.value.slice(0, startPosition - 1) +
 			textarea.value.slice(endPosition)
 		textarea.selectionEnd = textarea.selectionStart = startPosition - 1
-	} else {
+	} else if (direction === 1 && endPosition < textarea.value.length) {
+		// delete
 		textarea.value =
-			textarea.value.slice(0, startPosition) + textarea.value.slice(endPosition)
-		textarea.selectionEnd = textarea.selectionStart = startPosition + direction
+			textarea.value.slice(0, startPosition) +
+			textarea.value.slice(endPosition + 1)
+		textarea.selectionEnd = textarea.selectionStart = startPosition
 	}
+
 	textarea.focus()
 }
 
