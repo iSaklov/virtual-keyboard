@@ -48,28 +48,42 @@ body {
 	transition: all 0.2s ease-in-out;
 
 	position: relative;
-	font-size: 16px;
 	width: 3rem;
 	height: 3rem;
 
-	&:before {
+	&[data-action] {
+		background-color: teal;
+		&::before {
+			content: attr(data-key);
+		}
+	}
+
+	&[data-action='CapsLock'].active {
+		background-color: rosybrown;
+	}
+
+	&[data-shiftkey]:not([data-keytype="letter"])::before {
 		position: absolute;
 		content: attr(data-shiftkey);
-		font-size: 12px;
+		font-size: 14px;
 		top: 0;
 		left: 0;
 	}
 
-	&:after {
-		// position: absolute;
+	&[data-shiftkey]::after {
+		position: absolute;
 		content: attr(data-key);
 		font-size: 25px;
 		bottom: 0;
 		right: 0.25rem;
 	}
 
-	&.action {
-		background-color: teal;
+	&[data-shiftkey].uppercase::before {
+		display: none;
+	}
+
+	&[data-shiftkey].uppercase::after {
+		content: attr(data-shiftkey);
 	}
 
 	&:hover {
@@ -79,38 +93,4 @@ body {
 	&.active {
 		background-color: darken($primary-color, 20%);
 	}
-
-	&.spacer {
-		flex-grow: 1;
-		visibility: hidden;
-	}
-
-	&::first-letter {
-		// font-size: 0.3rem;
-		// position: absolute;
-		// top: -1rem;
-		// left: 0;
-	}
-}
-
-.capslock.active {
-	background-color: rosybrown;
-}
-
-.keyboard-key[data-code='Enter'] {
-	// position: relative;
-	// background-color: aqua !important;
-	// z-index: 5;
-
-	// &:after {
-	// 	content: '';
-	// 	position: absolute;
-	// 	bottom: -1rem;
-	// 	left: 1rem;
-	// 	width: 2rem;
-	// 	height: 2rem;
-	// 	background-color: $primary-color;
-	// 	border-radius: 0 0 0 0.5rem;
-	// 	z-index: 0;
-	// }
 }

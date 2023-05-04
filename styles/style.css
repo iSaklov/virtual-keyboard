@@ -348,36 +348,41 @@ body {
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   position: relative;
-  font-size: 16px;
   width: 3rem;
   height: 3rem;
 }
-.keyboard-key:before {
+.keyboard-key[data-action] {
+  background-color: teal;
+}
+.keyboard-key[data-action]::before {
+  content: attr(data-key);
+}
+.keyboard-key[data-action=CapsLock].active {
+  background-color: rosybrown;
+}
+.keyboard-key[data-shiftkey]:not([data-keytype=letter])::before {
   position: absolute;
   content: attr(data-shiftkey);
-  font-size: 12px;
+  font-size: 14px;
   top: 0;
   left: 0;
 }
-.keyboard-key:after {
+.keyboard-key[data-shiftkey]::after {
+  position: absolute;
   content: attr(data-key);
   font-size: 25px;
   bottom: 0;
   right: 0.25rem;
 }
-.keyboard-key.action {
-  background-color: teal;
+.keyboard-key[data-shiftkey].uppercase::before {
+  display: none;
+}
+.keyboard-key[data-shiftkey].uppercase::after {
+  content: attr(data-shiftkey);
 }
 .keyboard-key:hover {
   background-color: #0062cc;
 }
 .keyboard-key.active {
   background-color: #004a99;
-}
-.keyboard-key.spacer {
-  flex-grow: 1;
-  visibility: hidden;
-}
-.capslock.active {
-  background-color: rosybrown;
 }

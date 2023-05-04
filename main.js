@@ -1,12 +1,13 @@
 import keyboardLayouts from './keyboard-layout.js'
 
-const os = 'mac' // Указываем операционную систему
-
 // alert('Здесь кипит работа 🤯')
 // alert('Работа над заданием привела к глубокой депрессии')
 // alert('Буду очень признателен, если сможешь проверить меня в последнюю очередь')
 
-let currentLanguage = localStorage.getItem('language') || 'en' // Получаем текущий язык или устанавливаем по умолчанию английский
+// let currentLanguage = localStorage.getItem('language') || 'en' // Получаем текущий язык или устанавливаем по умолчанию английский
+
+let currentLanguage = localStorage.getItem('language') || 'en'
+
 
 const keyboard = document.createElement('div')
 keyboard.classList.add('keyboard')
@@ -44,23 +45,25 @@ function initKeyboard(language) {
 		rowElement.classList.add('keyboard-row')
 
 		row.forEach((item) => {
-			// const isLetter = /^[a-zA-Zа-яА-ЯёЁ]$/.test(keyValue)
-			// /^[^a-zA-Zа-яА-ЯёЁ]$/
+			const isLetter = /^[a-zA-Zа-яА-ЯёЁ]$/.test(item.key)
 			const button = document.createElement('button')
 			button.classList.add('keyboard-key')
 
 			if (item.action) {
-				button.classList.add('action')
 				button.setAttribute('data-action', item.action)
+			}
+
+			if (item.shiftKey) {
+				button.setAttribute('data-shiftKey', item.shiftKey)
+			}
+
+			if (isLetter) {
+				button.setAttribute('data-keyType', 'letter')
 			}
 
 			button.setAttribute('data-code', item.code)
 			button.setAttribute('data-key', item.key)
-			button.setAttribute('data-shiftKey', item.shiftKey)
-			if (/^[^a-zA-Zа-яА-ЯёЁ]$/.test(item.key)) {
-				// button.textContent = item.shiftKey
-			}
-			// button.textContent += '\n' + item.key
+
 			rowElement.append(button)
 		})
 
@@ -76,12 +79,16 @@ initKeyboard(currentLanguage)
 // Обработчик нажатия на клавиатуре мышью
 keyboard.addEventListener('click', (event) => {
 	if (event.target.classList.contains('keyboard-key')) {
-		if (!event.target.classList.contains('action')) {
-			insertText(event.target.textContent)
+		if (!event.target.dataset.action) {
+			if (
+				capslockButton.classList.contains('active') ||
+				keyboard.classList.contains('shift-pressed')
+			) {
+				insertText(event.target.dataset.shiftkey)
+			} else {
+				insertText(event.target.dataset.key)
+			}
 		}
-
-		// console.log('event.target.dataset.code', event.target.dataset.code)
-		// console.log('event.target.dataset.action', event.target.dataset.action)
 
 		switch (event.target.dataset.action) {
 			case 'Backspace':
@@ -98,35 +105,46 @@ keyboard.addEventListener('click', (event) => {
 				break
 			case 'CapsLock':
 				capslockButton.classList.toggle('active')
-				toggleCaseMode()
-				break
-			// case 'Shift':
-			// 	keyboard.classList.add('shift-pressed')
-			// 	toggleCaseMode()
-			case 'Space':
-				insertText(' ')
+				toggleCapsLock()
 				break
 			case 'ArrowUp':
-				insertText('↑')
+				insertText(event.target.dataset.key)
 				break
 			case 'ArrowDown':
-				insertText('↓')
+				insertText(event.target.dataset.key)
 				break
 			case 'ArrowLeft':
-				insertText('←')
+				insertText(event.target.dataset.key)
 				break
 			case 'ArrowRight':
-				insertText('→')
+				insertText(event.target.dataset.key)
 				break
 		}
 	}
 })
 
+const capslockButton = document.querySelector('button[data-code="CapsLock"]')
+capslockButton.classList.add('capslock')
+
+const shiftButtons = document.querySelectorAll('button[data-action="Shift"]')
+
+shiftButtons.forEach((button) => {
+	button.addEventListener('mousedown', () => {
+		keyboard.classList.add('shift-pressed')
+		toggleShift()
+	})
+})
+
+shiftButtons.forEach((button) => {
+	button.addEventListener('mouseup', () => {
+		keyboard.classList.remove('shift-pressed')
+		toggleShift()
+	})
+})
+
 // Обработчик нажатия клавиш на физической клавиатуре
 document.addEventListener('keydown', (event) => {
 	const key = event.key
-	// console.log('key', key)
-	// console.log('event', event.code)
 
 	// Отменяем стандартное поведение кнопок
 	event.preventDefault()
@@ -158,11 +176,11 @@ document.addEventListener('keydown', (event) => {
 				'active',
 				event.getModifierState('CapsLock')
 			)
-			toggleCaseMode()
+			toggleCapsLock()
 			break
 		case 'Shift':
 			keyboard.classList.add('shift-pressed')
-			toggleCaseMode()
+			toggleShift()
 			break
 		case 'ArrowUp':
 			insertText('↑')
@@ -179,25 +197,6 @@ document.addEventListener('keydown', (event) => {
 	}
 })
 
-const capslockButton = document.querySelector('button[data-code="CapsLock"]')
-capslockButton.classList.add('capslock')
-
-const shiftButtons = document.querySelectorAll('button[data-action="Shift"]')
-
-shiftButtons.forEach((button) => {
-	button.addEventListener('mousedown', () => {
-		keyboard.classList.add('shift-pressed')
-		toggleCaseMode()
-	})
-})
-
-shiftButtons.forEach((button) => {
-	button.addEventListener('mouseup', () => {
-		keyboard.classList.remove('shift-pressed')
-		toggleCaseMode()
-	})
-})
-
 // Обработчик отжатия клавиш на физической клавиатуре
 document.addEventListener('keyup', (event) => {
 	if (event.key === 'CapsLock') {
@@ -205,11 +204,11 @@ document.addEventListener('keyup', (event) => {
 			'active',
 			event.getModifierState('CapsLock')
 		)
-		toggleCaseMode()
+		toggleCapsLock()
 	}
 	if (event.key === 'Shift') {
 		keyboard.classList.remove('shift-pressed')
-		toggleCaseMode()
+		toggleShift()
 	}
 
 	// Снимаем подсветку с клавиши на виртуальной клавиатуре
@@ -244,7 +243,10 @@ function insertText(string) {
 	const cursorPosEnd = textarea.selectionEnd
 	const currentValue = textarea.value
 
-	if (capslockButton.classList.contains('active')) {
+	if (
+		capslockButton.classList.contains('active') ||
+		keyboard.classList.contains('shift-pressed')
+	) {
 		string = string.toUpperCase()
 	}
 
@@ -279,52 +281,36 @@ function deleteText(direction) {
 	textarea.focus()
 }
 
-// Функция для переключения режима CapsLock и удержания клавиши Shift
-function toggleCaseMode() {
-	const buttons = document.querySelectorAll('button:not([data-action])')
+function toggleCapsLock() {
+	const buttons = document.querySelectorAll('button[data-keytype="letter"]')
 	buttons.forEach((button) => {
-		if (
-			capslockButton.classList.contains('active') ||
-			keyboard.classList.contains('shift-pressed')
-		) {
-			button.textContent = button.dataset.shiftkey
+		if (capslockButton.classList.contains('active')) {
+			button.classList.add('uppercase')
 		} else {
-			button.textContent = button.dataset.key
+			button.classList.remove('uppercase')
 		}
 	})
 }
 
-// Функция для переключения языка клавиатуры
-function switchLanguage() {
-	const language = localStorage.getItem('language') || 'en'
-	const newLanguage = language === 'en' ? 'ru' : 'en'
-	localStorage.setItem('language', newLanguage)
-	initKeyboard(newLanguage)
+function toggleShift() {
+	const buttons = document.querySelectorAll('button:not([data-action])')
+	buttons.forEach((button) => {
+		if (keyboard.classList.contains('shift-pressed')) {
+			button.classList.add('uppercase')
+		} else {
+			button.classList.remove('uppercase')
+		}
+	})
 }
 
-// Обработчик события переключения языка клавиатуры
-// const languageSwitcher = document.querySelector(".language-switcher");
-// languageSwitcher.addEventListener("click", () => {
-// if (currentLanguage === "en") {
-// currentLanguage = "ru";
-// } else {
-// currentLanguage = "en";
-// }
-// localStorage.setItem("language", currentLanguage);
-// initKeyboard();
-// });
+const ctrl = document.querySelector('button[data-code="ControlLeft"]')
+ctrl.addEventListener('click', switchLanguage)
 
-// Функция для обновления клавиатуры на новом языке
-// function initKeyboard() {
-// 	const keyboardRows = document.querySelectorAll('.keyboard-row')
-// 	keyboardRows.forEach((row, i) => {
-// 		const keys = row.querySelectorAll('.key')
-// 		keys.forEach((key, j) => {
-// 			const keyValue = languages[currentLanguage][i].split(' ')[j]
-// 			key.textContent = keyValue
-// 		})
-// 	})
-// }
-
-// Инициализация клавиатуры при загрузке страницы
-// initKeyboard();
+// Функция для переключения языка клавиатуры
+function switchLanguage() {
+	keyboard.innerHTML = ''
+	const newLanguage = currentLanguage === 'en' ? 'ru' : 'en'
+	localStorage.setItem('language', newLanguage)
+	currentLanguage = newLanguage
+	initKeyboard(newLanguage)
+}
