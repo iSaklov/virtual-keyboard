@@ -23,6 +23,12 @@ body {
 	padding: 1rem;
 	display: flex;
 	flex-wrap: wrap;
+
+	&.capslock-pressed {
+		.keyboard-key[data-action='CapsLock'] {
+			background-color: rosybrown;
+		}
+	}
 }
 
 // Стили для строки клавиатуры
@@ -58,11 +64,11 @@ body {
 		}
 	}
 
-	&[data-action='CapsLock'].active {
+	&.capslock-pressed[data-action='CapsLock'] {
 		background-color: rosybrown;
 	}
 
-	&[data-shiftkey]:not([data-keytype="letter"])::before {
+	&[data-shiftkey]:not([data-keytype='letter'])::before {
 		position: absolute;
 		content: attr(data-shiftkey);
 		font-size: 14px;

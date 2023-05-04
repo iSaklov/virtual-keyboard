@@ -329,6 +329,9 @@ body {
   display: flex;
   flex-wrap: wrap;
 }
+.keyboard.capslock-pressed .keyboard-key[data-action=CapsLock] {
+  background-color: rosybrown;
+}
 
 .keyboard-row {
   display: flex;
@@ -357,7 +360,7 @@ body {
 .keyboard-key[data-action]::before {
   content: attr(data-key);
 }
-.keyboard-key[data-action=CapsLock].active {
+.keyboard-key.capslock-pressed[data-action=CapsLock] {
   background-color: rosybrown;
 }
 .keyboard-key[data-shiftkey]:not([data-keytype=letter])::before {
