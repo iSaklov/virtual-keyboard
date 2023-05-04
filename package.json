@@ -7,7 +7,7 @@
     "start": "webpack serve",
     "build-dev": "webpack",
     "build-prod": "webpack --node-env=production",
-    "clear": "rm -R dist",
+    "clear": "rm -R virtual-keyboard",
     "deploy-git": "gh-pages -d virtual-keyboard"
   },
   "repository": {
